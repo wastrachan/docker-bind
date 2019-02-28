@@ -3,8 +3,20 @@ BIND9 Docker Image
 
 BIND9 in a Docker container, with configuration and zone files in a volume, and a configurable UID/GID for said files.
 
-#### Install
+![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/wastrachan/docker-bind.svg)
+![Docker Build Status](https://img.shields.io/docker/build/wastrachan/bind.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/wastrachan/bind.svg)
 
+## Install
+
+#### Docker Hub
+Pull the latest image from Docker Hub:
+
+```shell
+docker pull wastrachan/docker-bind
+```
+
+#### Manually
 Clone this repository, and run `make build` to build an image:
 
 ```shell
@@ -16,8 +28,9 @@ make build
 If you need to rebuild the image, run `make clean build`.
 
 
-#### Run
+## Run
 
+#### Docker
 Run this image with the `make run` shortcut, or manually with `docker run`.
 
 
@@ -33,7 +46,6 @@ docker run -v "$(pwd)/config:/config" \
 
 
 #### Docker Compose
-
 If you wish to run this image with docker-compose, an example `docker-compose.yml` might read as follows:
 
 ```yaml
@@ -56,7 +68,6 @@ services:
 
 
 ## Configuration
-
 Configuration files are stored in the `/config` volume. You may wish to mount this volume as a local directory, as shown in the examples above. `/config/named.conf` is the main configuration file for the application. Review the BIND man pages if you are unfamiliar with how to configure BIND.
 
 
@@ -64,21 +75,18 @@ Configuration files are stored in the `/config` volume. You may wish to mount th
 If you'd like to override the UID and GID of the `named` process, you can do so with the environment variables `PUID` and `PGID`. This is helpful if other containers must access your configuration volume.
 
 #### Services
-
 Service     | Port
 ------------|-----
 DNS         | 53
 
 
 #### Volumes
-
 Volume          | Description
 ----------------|-------------
 `/config`       | Configuration directory for BIND config and zone files.
 
 
 ## License
-
 The content of this project itself is licensed under the [MIT License](LICENSE).
 
 View [license information](https://www.isc.org/downloads/software-support-policy/isc-license/) for the software contained in this image.

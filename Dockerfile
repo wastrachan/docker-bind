@@ -1,6 +1,6 @@
 FROM alpine:latest
-LABEL maintainer="Winston Astrachan (rew1red)"
-LABEL description="BIND on Alpine Linux"
+LABEL maintainer="Winston Astrachan"
+LABEL description="BIND9 on Alpine Linux"
 
 RUN apk --no-cache add bind
 RUN mkdir /config

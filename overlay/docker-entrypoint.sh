@@ -5,17 +5,19 @@ PUID="${PUID:-100}"
 PGID="${PGID:-101}"
 
 echo ""
-echo "------------------"
-echo " Starting BIND9   "
-echo "                  "
-echo " As UID: $PUID    "
-echo " As GID: $PGID    "
-echo "------------------"
+echo "----------------------------------------"
+echo " Starting BIND9, using the following:   "
+echo "                                        "
+echo "     UID: $PUID                         "
+echo "     GID: $PGID                         "
+echo "----------------------------------------"
 echo ""
 
-# Copy default config file
+# Copy default config files
 if [ ! -f "/config/named.conf" ]; then
-    cp /default.named.conf /config/named.conf
+    cp /defaults/named.conf /config/named.conf
+    cp /defaults/db.localhost /config/db.localhost
+    cp /defaults/db.127 /config/db.127
 fi
 
 # Copy example config files

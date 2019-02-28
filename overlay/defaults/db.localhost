@@ -1,0 +1,15 @@
+;
+; Example Zone File for localhost
+;
+$TTL        3600
+@           IN      SOA     ns1.localhost. root.localhost. (
+                            2019021900      ; Serial
+                                 21600      ; Refresh [6h]
+                                   600      ; Retry [10m]
+                                604800      ; Expire [1w]
+                                   600 )    ; Negative Cache TTL [1h]
+;
+;
+@                           IN      NS      ns1.localhost.
+ns1                         IN      A       127.0.0.1
+@                           IN      A       127.0.0.2
