@@ -3,9 +3,9 @@ BIND9 Docker Image
 
 BIND9 in a Docker container, with configuration and zone files in a volume, and a configurable UID/GID for said files.
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/wastrachan/docker-bind.svg)
-![Docker Build Status](https://img.shields.io/docker/build/wastrachan/bind.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/wastrachan/bind.svg)
+[![](https://img.shields.io/github/tag/wastrachan/docker-bind.svg)](https://github.com/wastrachan/docker-bind/releases)
+[![](https://images.microbadger.com/badges/image/wastrachan/bind.svg)](https://microbadger.com/images/wastrachan/bind)
+[![](https://img.shields.io/docker/pulls/wastrachan/bind.svg)](https://hub.docker.com/r/wastrachan/bind)
 
 ## Install
 
