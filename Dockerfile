@@ -7,7 +7,6 @@ RUN mkdir /config
 
 COPY overlay/ /
 VOLUME /config
-EXPOSE 53/udp
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/named", "-g", "-u", "named", "-c", "/config/named.conf"]
