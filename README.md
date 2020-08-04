@@ -12,7 +12,7 @@ BIND9 in a Docker container, with configuration and zone files in a volume, and 
 Pull the latest image from Docker Hub:
 
 ```shell
-docker pull wastrachan/docker-bind
+docker pull wastrachan/bind
 ```
 
 #### Manually
