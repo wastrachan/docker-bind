@@ -2,7 +2,7 @@ FROM alpine:latest
 LABEL maintainer="Winston Astrachan"
 LABEL description="BIND9 on Alpine Linux"
 
-RUN apk --no-cache add bind
+RUN apk --no-cache add bind bind-dnssec-tools
 RUN mkdir /config
 
 COPY overlay/ /
