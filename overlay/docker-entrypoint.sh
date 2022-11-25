@@ -35,6 +35,10 @@ sed -i "s/^named\:x\:101/named\:x\:$PGID/" /etc/group
 chown -R $PUID:$PGID /config /var/bind
 
 # Check config
-/usr/sbin/named-checkconf /config/named.conf
+if [ -f "/usr/sbin/named-checkconf" ]; then
+    /usr/sbin/named-checkconf /config/named.conf
+elif [ -f "/usr/bin/named-checkconf" ]; then
+    /usr/bin/named-checkconf /config/named.conf
+fi
 
 exec "$@"
