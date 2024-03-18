@@ -2,19 +2,15 @@
 ; Example Reverse Zone file for 127.0.0.0/8
 ;
 $TTL        3600
-@           IN      SOA     ns1.localhost. root.localhost. (
-                            2019021900        ; Serial
-                                 21600        ; Refresh [6h]
-                                   600        ; Retry [10m]
-                                604800        ; Expire [1w]
-                                   600 )      ; Negative Cache TTL [1h]
+$ORIGIN     0.0.127.IN-ADDR.ARPA.
+@           IN       SOA   ns1.example.com. root.example.com. (
+                                2024012200 ; serial number
+                                12h        ; refresh
+                                15m        ; update retry
+                                3w         ; expiry
+                                2h         ; minimum
+                                )
 ;
-;
-@           IN      NS      ns1.localhost.
-
-
-; 127.0.0.0/24
-1.0.0       IN      PTR     ns1.localhost.
-
-; 127.1.0.0/24
-1.0.1       IN      PTR     test.localhost.
+@           IN       NS    ns1.example.com.
+1           IN       PTR   example.com.
+2           IN       PTR   example.com

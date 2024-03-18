@@ -1,28 +1,31 @@
 version: 2
 jobs:
   build:
-    environment:
-      IMAGE_NAME: wastrachan/bind
     docker:
-      - image: docker:latest
+      - image: cimg/base:current
+    resource_class: large
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install deps
-          command: |
-            apk --no-cache add curl
-      - run:
-          name: Build image
-          command: |
-            docker build -t $IMAGE_NAME:latest .
-      - deploy:
-          name: Publish image
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-              docker push $IMAGE_NAME:latest
-            fi
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      # login to dockerhub
+      - run: echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+
+      # login to ghcr.io
+      - run: echo "$GITHUB_PAT" | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+
+      # build image
+      - run: make build
+
+      # publish to dockerhub
+      - run: make push
+
+      # publish to ghcr.io
+      - run: |
+          docker tag wastrachan/bind:latest ghcr.io/wastrachan/bind:latest
+          docker push ghcr.io/wastrachan/bind:latest
 
 workflows:
   version: 2

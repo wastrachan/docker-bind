@@ -5,16 +5,15 @@ PUID="${PUID:-100}"
 PGID="${PGID:-101}"
 
 echo ""
-echo "----------------------------------------"
-echo " Starting BIND9, using the following:   "
-echo "                                        "
-echo "     UID: $PUID                         "
-echo "     GID: $PGID                         "
-echo "----------------------------------------"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo " Starting BIND with UID $PUID and GID $PGID..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 # Copy default config files
 if [ ! -f "/config/named.conf" ]; then
+    echo "    [+] Configuration not present"
+    echo "    [+] Creating default configuration at /config/named.conf"
     cp /defaults/named.conf /config/named.conf
     cp /defaults/db.localhost /config/db.localhost
     cp /defaults/db.127 /config/db.127
@@ -22,6 +21,7 @@ fi
 
 # Copy example config files
 if [ ! -d "/config/examples" ]; then
+    echo "    [+] Creating example configuration at /config/examples"
     mkdir -p /config/examples
     cp /etc/bind/named.conf.recursive /config/examples
     cp /etc/bind/named.conf.authoritative /config/examples
@@ -41,4 +41,5 @@ elif [ -f "/usr/bin/named-checkconf" ]; then
     /usr/bin/named-checkconf /config/named.conf
 fi
 
+echo ""
 exec "$@"

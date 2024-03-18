@@ -1,7 +1,6 @@
-# Docker BIND Image
-#
-# Winston Astrachan 2020
-#
+# BIND9 Docker Image
+
+.PHONY: help
 help:
 	@echo ""
 	@echo "Usage: make COMMAND"
@@ -10,38 +9,39 @@ help:
 	@echo ""
 	@echo "Commands:"
 	@echo "  build        Build and tag image"
+	@echo "  push         Push tagged image to registry"
 	@echo "  run          Start container in the background with locally mounted volume"
 	@echo "  stop         Stop and remove container running in the background"
-	@echo "  clean        Mark image for rebuild"
-	@echo "  delete       Delete image and mark for rebuild"
+	@echo "  delete       Delete all built image versions"
 	@echo ""
 
-build: .bind.img
+IMAGE=wastrachan/bind
+TAG=latest
+REGISTRY=docker.io
 
-.bind.img:
-	docker build -t wastrachan/bind:latest .
-	@touch $@
+.PHONY: build
+build:
+	@docker build -t ${REGISTRY}/${IMAGE}:${TAG} .
+
+.PHONY: push
+push:
+	@docker push ${REGISTRY}/${IMAGE}:${TAG}
 
 .PHONY: run
 run: build
 	docker run -v "$(CURDIR)/config:/config" \
 	           --name bind \
+			   --rm \
 	           -p 53:53/udp \
-	           -e PUID=1111 \
-	           -e PGID=1112 \
-	           --restart unless-stopped \
+	           -e PUID=$$(id -u) \
+	           -e PGID=$$(id -g) \
 	           -d \
-	           wastrachan/bind:latest
+	           ${REGISTRY}/${IMAGE}:${TAG}
 
 .PHONY: stop
 stop:
-	docker stop bind
-	docker rm bind
-
-.PHONY: clean
-clean:
-	rm -f .bind.img
+	@docker stop bind
 
 .PHONY: delete
-delete: clean
-	docker rmi -f wastrachan/bind
+delete:
+	@docker image ls | grep ${IMAGE} | awk '{print $$3}' | xargs -I + docker rmi +

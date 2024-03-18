@@ -1,15 +1,16 @@
 ;
-; Example Zone File for localhost
+; Example Zone File for "example.com"
 ;
 $TTL        3600
-@           IN      SOA     ns1.localhost. root.localhost. (
-                            2019021900      ; Serial
-                                 21600      ; Refresh [6h]
-                                   600      ; Retry [10m]
-                                604800      ; Expire [1w]
-                                   600 )    ; Negative Cache TTL [1h]
+$ORIGIN     example.com
+@           IN       SOA   ns1.example.com. root.example.com. (
+                                2024012200 ; serial number
+                                12h        ; refresh
+                                15m        ; update retry
+                                3w         ; expiry
+                                2h         ; minimum
+                                )
 ;
-;
-@                           IN      NS      ns1.localhost.
-ns1                         IN      A       127.0.0.1
-@                           IN      A       127.0.0.2
+@           IN       NS    ns1.example.com.
+ns1         IN       A     127.0.0.1
+@           IN       A     127.0.0.2
