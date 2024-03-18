@@ -11,22 +11,18 @@ jobs:
           docker_layer_caching: true
 
       - run:
+          name: Build image
           command: |
-            # log in to dockerhub
-            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-
-            # log in to ghcr.io
-            echo "$GITHUB_PAT" | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-
-            # build image
             make build
-
-            # publish to dockerhub
-            make push
-
-            # publish to ghcr.io
             docker tag wastrachan/bind:latest ghcr.io/wastrachan/bind:latest
-            docker push ghcr.io/wastrachan/bind:latest
+
+      - run:
+          name: Publish image
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            echo "$GITHUB_PAT" | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+            make push
+            make push REGISTRY=ghcr.io
 
 workflows:
   version: 2
