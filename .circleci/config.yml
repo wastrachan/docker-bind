@@ -33,6 +33,7 @@ workflows:
   commit:
     jobs:
       - build:
+          context: Docker
           filters:
             branches:
               only: master
@@ -44,4 +45,5 @@ workflows:
             branches:
               only: master
     jobs:
-      - build
+      - build:
+          context: Docker
